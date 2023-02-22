@@ -48,6 +48,6 @@ func NewProductController(router *gin.Engine, productUc usecase.ProductUseCase) 
 
 	router.GET("/products", newProductController.GetAllProduct)
 	router.POST("/product", newProductController.CreateNewProduct)
-	router.GET()
+	//router.GET()
 	return &newProductController
 }
