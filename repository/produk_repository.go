@@ -6,47 +6,65 @@ import (
 	"godb/utils"
 )
 
-type ProdukRepository interface {
+type ProductRepository interface {
 	GetAll() ([]model.Product, error)
+	GetByStoreId(id string) ([]model.Product, error)
 }
 
-type produkRepository struct {
+type productRepository struct {
 	db *sql.DB
 }
 
-func (pr *produkRepository) GetAll() ([]model.Product, error) {
-	rows, err := pr.db.Query(utils.SELECT_PRODUK_LIST)
-
+func (p *productRepository) GetAll() ([]model.Product, error) {
+	rows, err := p.db.Query(utils.SELECT_PRODUCT_LIST)
 	if err != nil {
 		return nil, err
 	}
-
-	var produks []model.Product
+	var products []model.Product
 	for rows.Next() {
-		var produk model.Product
-
-		err := rows.Scan(
-			&produk.Id,
-			&produk.Nama,
-			&produk.Price,
-			&produk.Stock,
-			&produk.Create_ad,
-			&produk.Store_id,
+		var product model.Product
+		rows.Scan(
+			&product.Id,
+			&product.Name,
+			&product.Price,
+			&product.Stock,
+			&product.CreatedAt,
+			&product.StoreId,
 		)
-
 		if err != nil {
-
 			return nil, err
 		}
-
-		produks = append(produks, produk)
-
+		products = append(products, product)
 	}
-	return produks, nil
+	return products, nil
 }
 
-func NewProdukRepository(dbConnect *sql.DB) ProdukRepository {
-	return &produkRepository{
-		db: dbConnect,
+func (p *productRepository) GetByStoreId(id string) ([]model.Product, error) {
+	rows, err := p.db.Query(utils.SELECT_PRODUCT_STOREID, id)
+	if err != nil {
+		return nil, err
+	}
+	var products []model.Product
+	for rows.Next() {
+		var product model.Product
+		rows.Scan(
+			&product.Id,
+			&product.Name,
+			&product.Price,
+			&product.Stock,
+			&product.CreatedAt,
+			&product.StoreId,
+		)
+		if err != nil {
+			return nil, err
+		}
+		products = append(products, product)
+	}
+	return products, nil
+}
+
+func NewProductRepository(db *sql.DB) ProductRepository {
+	return &productRepository{
+		db: db,
 	}
 }

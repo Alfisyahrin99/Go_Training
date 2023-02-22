@@ -1,7 +1,7 @@
 package model
 
 type Customer struct {
-	Id      int
+	Id      string
 	Name    string
 	Balance int
 }

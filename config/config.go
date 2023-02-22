@@ -14,12 +14,11 @@ type Config struct {
 }
 
 func (c *Config) initDb() {
-	// Tampung nilai ENV dari
 	err := godotenv.Load()
 	if err != nil {
 		panic(err.Error())
 	}
-
+	// tampung nilai ENV dari terminal
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbUser := os.Getenv("DB_USER")
@@ -32,27 +31,25 @@ func (c *Config) initDb() {
 	// buka koneksi
 	db, err := sqlx.Open(dbDriver, dsn)
 	// menutup koneksi
-	// defer untuk menjalankan suatu statement diakhir blok function / atau dieksekusi sebelum fungsi selesai berjalan
-	// defer db.Close()
+	// defer untuk menjalankan suatu statement diakhir block function / atau dieksekusi sebelum fungsi selesai berjalan
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 
-	// check Konfigurasi
+	// check konfigurasi
 	if err := db.Ping(); err != nil {
 		fmt.Println(err.Error())
 	}
-
 	c.db = db
 }
 
-func (c *Config) DbConnect() *sqlx.DB { // Method untuk mendapatkan koneksi
+func (c *Config) DbConnect() *sqlx.DB { // method untuk mendapatkan Koneksi
 	return c.db
 }
 
 func NewConfig() Config {
 	config := Config{}
-	config.initDb() // untuk menjalankan method yang didalmnya membuka koneksi ke DB
-	return config   // Mengirimkan Object Config yang dalamnya terdapat attribute bertipe data koneksi, namun koneksi tidak dapat diakses secara
+	config.initDb() // untuk menjalankan method yang didalamnya membuka koneksi ke DB
+	return config   // Mengirimkan Object Config yang didalamnya terdapat attribute bertipe data Koneksi, namun koneksi tidak dapat diakses secara
 	// langsung karena attribute bertipe private
 }

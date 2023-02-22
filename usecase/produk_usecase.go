@@ -5,20 +5,25 @@ import (
 	"godb/repository"
 )
 
-type ProdukUseCase interface {
-	GetAllProduk() ([]model.Product, error)
+type ProductUseCase interface {
+	GetAllProduct() ([]model.Product, error)
+	GetProductByStoreId(storeId string) ([]model.Product, error)
 }
 
-type produkUseCase struct {
-	produkRepo repository.ProdukRepository
+type productUseCase struct {
+	productRepo repository.ProductRepository
 }
 
-func (pr *produkUseCase) GetAllProduk() ([]model.Product, error) {
-	return pr.produkRepo.GetAll()
+func (p *productUseCase) GetAllProduct() ([]model.Product, error) {
+	return p.productRepo.GetAll()
 }
 
-func NewProdukUseCase(produkRepository repository.ProdukRepository) ProdukUseCase {
-	return &produkUseCase{
-		produkRepo: produkRepository,
+func (p *productUseCase) GetProductByStoreId(storeId string) ([]model.Product, error) {
+	return p.productRepo.GetByStoreId(storeId)
+}
+
+func NewProductUseCase(productRepository repository.ProductRepository) ProductUseCase {
+	return &productUseCase{
+		productRepo: productRepository,
 	}
 }

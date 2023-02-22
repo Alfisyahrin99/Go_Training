@@ -1,10 +1,10 @@
 package model
 
 type Product struct {
-	Id        int
-	Nama      string
+	Id        string
+	Name      string
 	Price     int
 	Stock     int
-	Create_ad string
-	Store_id  int
+	CreatedAt string
+	StoreId   string
 }
