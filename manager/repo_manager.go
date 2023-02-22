@@ -5,7 +5,7 @@ import "godb/repository"
 type RepositoryManager interface {
 	ProductRepository() repository.ProductRepository
 	StoreRepository() repository.StoreRepository
-	CustomeRepository() repository.CustomerRepository
+	CustomerRepository() repository.CustomerRepository
 }
 
 type repositoryManager struct {
@@ -20,7 +20,7 @@ func (r *repositoryManager) StoreRepository() repository.StoreRepository {
 	return repository.NewStoreRepository(r.infra.SqlDb())
 }
 
-func (r *repositoryManager) CustomeRepository() repository.CustomerRepository {
+func (r *repositoryManager) CustomerRepository() repository.CustomerRepository {
 	return repository.NewCustomerRepository(r.infra.SqlDb())
 }
 

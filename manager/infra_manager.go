@@ -7,7 +7,7 @@ import (
 )
 
 type InfraManager interface {
-	sqlDb() *sqlx.DB
+	SqlDb() *sqlx.DB
 }
 
 type infraManager struct {
@@ -15,7 +15,7 @@ type infraManager struct {
 	config config.Config
 }
 
-func (i *infraManager) sqlDb() *sqlx.DB {
+func (i *infraManager) SqlDb() *sqlx.DB {
 	return i.db
 }
 
