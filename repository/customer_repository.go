@@ -1,9 +1,10 @@
 package repository
 
 import (
-	"database/sql"
 	"godb/model"
 	"godb/utils"
+
+	"github.com/jmoiron/sqlx"
 )
 
 // sebagai kontraknya interface ini akan dijadikan sebagai acuan oleh layar lain
@@ -14,13 +15,13 @@ type CustomerRepository interface {
 
 // object implementasi dari interfacenya
 type customerRepository struct {
-	db *sql.DB
+	db *sqlx.DB
 }
 
 // method receiver untuk insert data
 func (c *customerRepository) Insert(newCustomer *model.Customer) error {
 	// query := "INSERT INTO mst_customer (name,balance) values ($1,$2)"
-	_, err := c.db.Exec(utils.INSERT_CUSTOMER, newCustomer.Name, newCustomer.Balance)
+	_, err := c.db.NamedExec(utils.INSERT_CUSTOMER, newCustomer.Name)
 	if err != nil {
 		return err
 	}
@@ -46,7 +47,7 @@ func (c *customerRepository) GetAll() ([]model.Customer, error) {
 }
 
 // method untuk memanggil/menggunakan customerRepository
-func NewCustomerRepository(db *sql.DB) CustomerRepository {
+func NewCustomerRepository(db *sqlx.DB) CustomerRepository {
 
 	return &customerRepository{
 		db: db,

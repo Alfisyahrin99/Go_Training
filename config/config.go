@@ -1,19 +1,25 @@
 package config
 
 import (
-	"database/sql"
 	"fmt"
 	"os"
 
+	"github.com/jmoiron/sqlx"
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 type Config struct {
-	db *sql.DB
+	db *sqlx.DB
 }
 
 func (c *Config) initDb() {
-	// Tampung nilai ENV dari terminal
+	// Tampung nilai ENV dari
+	err := godotenv.Load()
+	if err != nil {
+		panic(err.Error())
+	}
+
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
 	dbUser := os.Getenv("DB_USER")
@@ -24,7 +30,7 @@ func (c *Config) initDb() {
 	// data source name
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPass, dbName)
 	// buka koneksi
-	db, err := sql.Open(dbDriver, dsn)
+	db, err := sqlx.Open(dbDriver, dsn)
 	// menutup koneksi
 	// defer untuk menjalankan suatu statement diakhir blok function / atau dieksekusi sebelum fungsi selesai berjalan
 	// defer db.Close()
@@ -40,7 +46,7 @@ func (c *Config) initDb() {
 	c.db = db
 }
 
-func (c *Config) DbConnect() *sql.DB { // Method untuk mendapatkan koneksi
+func (c *Config) DbConnect() *sqlx.DB { // Method untuk mendapatkan koneksi
 	return c.db
 }
 

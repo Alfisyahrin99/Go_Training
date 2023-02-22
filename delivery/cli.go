@@ -6,6 +6,8 @@ import (
 	"godb/config"
 	"godb/repository"
 	"godb/usecase"
+
+	"github.com/jmoiron/sqlx"
 	// "strings"
 )
 
@@ -43,7 +45,7 @@ func Run() {
 	// }
 }
 
-func StoreCli(db *sql.DB) {
+func StoreCli(db *sqlx.DB) {
 	storeRepo := repository.NewStoreRepository(db)
 	storeUseCase := usecase.NewStoreUseCase(storeRepo)
 

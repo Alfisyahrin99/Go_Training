@@ -1,9 +1,10 @@
 package repository
 
 import (
-	"database/sql"
 	"godb/model"
 	"godb/utils"
+
+	"github.com/jmoiron/sqlx"
 )
 
 type StoreRepository interface {
@@ -11,7 +12,7 @@ type StoreRepository interface {
 }
 
 type storeRepository struct {
-	db *sql.DB
+	db *sqlx.DB
 }
 
 func (st *storeRepository) GetAll() ([]model.StoreProducts, error) {
@@ -61,7 +62,7 @@ func (st *storeRepository) GetAll() ([]model.StoreProducts, error) {
 	return stores, nil
 }
 
-func NewStoreRepository(dbConnect *sql.DB) StoreRepository {
+func NewStoreRepository(dbConnect *sqlx.DB) StoreRepository {
 	return &storeRepository{
 		db: dbConnect,
 	}
