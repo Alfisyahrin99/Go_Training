@@ -2,6 +2,7 @@ package delivery
 
 import (
 	"godb/config"
+	"godb/delivery/controller"
 	"godb/manager"
 
 	"github.com/gin-gonic/gin"
@@ -25,8 +26,7 @@ func Server() *appServer {
 }
 
 func (a *appServer) initHandlers() {
-	// controller.newProductController(a.engine, a.useCaseManager.ProductUseCase())
-	// controller.NewProductController(a.engine, a.useCaseManager.ProductUseCase())
+	controller.NewProductController(a.engine, a.useCaseManager.ProductUseCase())
 }
 
 func (a *appServer) Run() {
