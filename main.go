@@ -1,15 +1,13 @@
 package main
 
 import (
-	"godb/delivery"
-
 	"github.com/gin-gonic/gin"
 )
 
 // import "godb/delivery"
 
 func main() {
-	delivery.Run()
+	// delivery.Run()
 
 	// r := gin.Default()
 	// r.GET("/hello", func(ctx *gin.Context) {
