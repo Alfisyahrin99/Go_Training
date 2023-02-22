@@ -11,6 +11,7 @@ const (
 	SELECT_STORE_LIST = "SELECT * FROM mst_store"
 
 	//PRODUCT
-	SELECT_PRODUCT_LIST    = "SELECT * FROM mst_product"
-	SELECT_PRODUCT_STOREID = "SELECT * FROM mst_product where store_id = $1"
+	INSERT_PRODUCT         = "INSERT INTO product (id,name,price,stock) values (:id,:name,:price,:stock)"
+	SELECT_PRODUCT_LIST    = "SELECT * FROM product"
+	SELECT_PRODUCT_STOREID = "SELECT * FROM product where store_id = $1"
 )
